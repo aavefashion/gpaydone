@@ -2,12 +2,17 @@ import React, { useEffect, useState } from 'react'
 import B2 from '../assets/images/gpayfooter.webp'
 import U5G from "../assets/images/5g.svg"
 import { Link } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
+
 import Airtel from "../assets/images/airtel.png"
 import Jio from "../assets/images/jio.png"
 import Bsnl from "../assets/images/bsnl.png"
 import Vi from "../assets/images/vi.jpg"
 
 const Getofffer = () => {
+const location = useLocation();
+const { number, np } = location.state || {};
+  
   const [show, setShow] = useState(false)
   const [cancel, setCancel] = useState(false)
   const [price, setPrice] = useState(0)
@@ -141,16 +146,16 @@ const Getofffer = () => {
 
       <div className="bg-white py-4 px-4 text-[13.4px] flex items-center justify-between">
         <div className="flex items-center">
-          {localStorage.np &&
-            <img src={localStorage.np === "jio" ? Jio : localStorage.np === "airtel" ? Airtel : localStorage.np === "vi" ? Vi : localStorage.np === "bsnl" ? Bsnl : Jio} alt="" className='h-12 rounded-full' />}
+          {np &&
+            <img src={np === "jio" ? Jio : np === "airtel" ? Airtel : np === "vi" ? Vi : np === "bsnl" ? Bsnl : Jio} alt="" className='h-12 rounded-full' />}
 
           <div className="font-bold text-[14px] text-blue-900 ml-2">
-            <div> Recharge for: {localStorage.number && localStorage.number}</div>
+            <div> Recharge for: {number && number}</div>
 
             <div className="text-slate-500 font-normal text-[12px] mt-[-2px]">
 
 
-              {localStorage.np === "jio" ? "Jio" : localStorage.np === "airtel" ? "Airtel" : localStorage.np === "vi" ? "VI" : localStorage.np === "bsnl" ? "BSNL" : "Jio"} Prepaid</div>
+              {np === "jio" ? "Jio" : np === "airtel" ? "Airtel" : np === "vi" ? "VI" : np === "bsnl" ? "BSNL" : "Jio"} Prepaid</div>
           </div>
         </div>
         <Link to="/" className="text-blue-600">Change</Link>
