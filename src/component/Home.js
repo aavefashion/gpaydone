@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { FaClock } from 'react-icons/fa'
+import React, { useEffect, useState } from 'react';
+import { FaClock } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { RiSmartphoneFill } from 'react-icons/ri';
-import GpayBanner from "../assets/images/gpaybanner.png"
-import GpayFooter from "../assets/images/gpayfooter.webp"
-
+import GpayBanner from "../assets/images/gpaybanner.png";
+import GpayFooter from "../assets/images/gpayfooter.webp";
 
 const Home = () => {
-  const navigate = useNavigate()
-  const [number, setnumber] = useState()
-  const [select, setselect] = useState("jio")
-  const [error, setError] = useState(false)
+  const navigate = useNavigate();
+  const [number, setNumber] = useState('');
+  const [select, setSelect] = useState("jio");
+  const [error, setError] = useState(false);
   const [seconds, setSeconds] = useState(15 * 60);
 
   useEffect(() => {
@@ -29,14 +28,13 @@ const Home = () => {
   const remainingSeconds = seconds % 60;
 
   const openOffer = () => {
-    if (number?.length === 10) {
-      localStorage.setItem("number", number)
-      localStorage.setItem("np", select)
-      navigate("/recharge")
+    if (number.length === 10) {
+      // Instead of localStorage, you can navigate with state
+      navigate("/recharge", { state: { number, np: select } });
     } else {
-      setError(true)
+      setError(true);
     }
-  }
+  };
 
   return (
     <div className="bg-white">
@@ -51,22 +49,38 @@ const Home = () => {
       </div>
       <div className="py-10 px-5">
         <div className="bg-white border border-slate-200 rounded-xl py-4 px-6 shadow-xl shadow-blue-100">
-          <div className="text-blue-500 flex items-center text-[17px] font-bold w-fit mx-auto mb-8"><RiSmartphoneFill size={30} /><span>Mobile Recharge</span></div>
+          <div className="text-blue-500 flex items-center text-[17px] font-bold w-fit mx-auto mb-8">
+            <RiSmartphoneFill size={30} />
+            <span>Mobile Recharge</span>
+          </div>
           <label className="text-[13px] ml-1 font-bold mt-5">Select Network Provider</label>
           <div className="mt-2 flex justify-between text-blue-500 text-[14px] font-bold">
-            <div className="border-2 border-blue-500 rounded px-2 py-1"><input type="radio" id="jio" name="r1" value="jio" onChange={(e)=>setselect(e.target.value)} className="mr-1 mt-1" defaultChecked={select==="jio"} /><label for="jio">Jio</label> </div>
-            <div className="border-2 border-blue-500 rounded px-2 py-1"><input type="radio" id="airtel" name="r1" value="airtel" onChange={(e)=>setselect(e.target.value)} className="mr-1 mt-1" defaultChecked={select==="airtel"} /><label for="airtel">Airtel</label> </div>
-            <div className="border-2 border-blue-500 rounded px-2 py-1"><input type="radio" id="vi" name="r1" value="vi" onChange={(e)=>setselect(e.target.value)} className="mr-1 mt-1" defaultChecked={select==="vi"} /><label for="vi">VI</label> </div>
-            <div className="border-2 border-blue-500 rounded px-2 py-1"><input type="radio" id="bsnl" name="r1" value="bsnl" onChange={(e)=>setselect(e.target.value)} className="mr-1 mt-1" defaultChecked={select==="bsnl"} /><label for="bsnl">Bsnl</label> </div>
+            {/* Radio Buttons */}
+            {['jio', 'airtel', 'vi', 'bsnl'].map(provider => (
+              <div className="border-2 border-blue-500 rounded px-2 py-1" key={provider}>
+                <input 
+                  type="radio" 
+                  id={provider} 
+                  name="r1" 
+                  value={provider} 
+                  onChange={(e) => setSelect(e.target.value)} 
+                  className="mr-1 mt-1" 
+                  checked={select === provider} 
+                />
+                <label htmlFor={provider}>{provider.charAt(0).toUpperCase() + provider.slice(1)}</label>
+              </div>
+            ))}
           </div>
           <div className="mt-3">
             <label className="text-[13px] ml-1 font-bold">Mobile Number</label>
             <input
               type="number"
-              onChange={(e) => setnumber(e.target.value)}
-              value={number || ""}
+              onChange={(e) => setNumber(e.target.value)}
+              value={number}
               placeholder="+91 xxxxx xxxxx"
-              className="bg-white mt-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+              className="bg-white mt-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+              required 
+            />
             {error && <small className="text-red-500 my-1">Please enter valid mobile number!!</small>}
           </div>
           <div className="mt-5">
@@ -76,7 +90,7 @@ const Home = () => {
       </div>
       <img src={GpayFooter} alt="" className="mt-3" />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
