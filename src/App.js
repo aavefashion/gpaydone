@@ -8,13 +8,7 @@ import { useEffect, useState } from 'react';
 import ChromePage from './component/ChromePage';
 
 function App() {
-  const [show, setShow] = useState(true);
-  const [data, setData] = useState(() => {
-    // Retrieve data from localStorage
-    const savedData = localStorage.getItem('rechargeData');
-    return savedData ? JSON.parse(savedData) : null;
-  });
-
+  const [show, setshow] = useState(true)
   useEffect(() => {
     function isInstagramBrowser() {
       var ua = navigator.userAgent || navigator.vendor || window.opera;
@@ -35,26 +29,19 @@ function App() {
     }
 
     if (isInstagramBrowser()) {
-      setShow(false);
+      setshow(false)
       redirectToChrome();
     } else {
-      setShow(true);
+      setshow(true)
     }
-  }, []);
 
-  useEffect(() => {
-    // Store data in localStorage whenever it changes
-    if (data) {
-      localStorage.setItem('rechargeData', JSON.stringify(data));
-    }
-  }, [data]);
-
+  }, [])
   return (
     <BrowserRouter>
       {show && <Header />}
       <Routes>
         <Route path="/" element={show ? <Home /> : <ChromePage />} />
-        <Route path="/recharge" element={<Getoffer data={data} setData={setData} />} />
+        <Route path="/recharge" element={<Getoffer />} />
       </Routes>
     </BrowserRouter>
   );
